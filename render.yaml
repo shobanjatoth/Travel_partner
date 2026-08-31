@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: tripmate-ai
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+
+    healthCheckPath: /health
+
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+
+      - key: DEBUG
+        value: "false"
+
+      - key: GROQ_API_KEY
+        sync: false
+
+      - key: GROQ_MODEL
+        value: openai/gpt-oss-120b
+
+      - key: TAVILY_API_KEY
+        sync: false
+
+      - key: OPENWEATHER_API_KEY
+        sync: false
+
+      - key: AVIATION_STACK_API_KEY
+        sync: false
+
+      - key: SECRET_KEY
+        sync: false
+
+      - key: JWT_ALGORITHM
+        value: HS256
+
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "60"
+
+      - key: LANGCHAIN_TRACING_V2
+        value: "false"
+
+      - key: LANGCHAIN_PROJECT
+        value: TripMateAI
