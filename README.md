@@ -59,15 +59,116 @@ The main travel workflow in `backend.py` calls these helpers from the flight, ho
 ## Project Structure
 
 ```text
-.
-├── app.py                      # FastAPI app entry point
-├── backend.py                  # LangGraph travel workflow
-├── mcp_client.py               # MCP client and tool integration
-├── custom_weather_mcp_server.py# Local weather MCP server
-├── requirements.txt            # Python dependencies
-├── static/                     # Static frontend assets
-├── templates/                  # HTML templates
-└── tools/                      # Flight and web search integrations
+TripMate/
+│
+├── .github/
+│   └── workflows/
+│       ├── ci.yml                  # CI pipeline: testing and validation
+│       └── deploy.yml              # Deployment workflow
+│
+├── app/
+│   ├── agents/                     # AI agents and travel planning logic
+│   │   ├── __init__.py
+│   │   ├── budget.py               # Budget planning agent
+│   │   ├── flight.py               # Flight planning/search agent
+│   │   ├── guardrail.py            # Input/output safety validation
+│   │   ├── hotel.py                # Hotel planning/search agent
+│   │   ├── itinerary.py            # Itinerary generation agent
+│   │   ├── responder.py            # Final response generation
+│   │   ├── reviewer.py             # Plan review/validation agent
+│   │   ├── supervisor.py            # Agent supervisor/orchestrator
+│   │   └── weather.py              # Weather-related agent
+│   │
+│   ├── api/                        # FastAPI routes and API schemas
+│   │   ├── __init__.py
+│   │   ├── auth_routes.py          # Authentication endpoints
+│   │   ├── dependencies.py         # API dependencies
+│   │   ├── routes.py               # Main API endpoints
+│   │   └── schemas.py              # Request/response schemas
+│   │
+│   ├── core/                       # Application configuration and utilities
+│   │   ├── __init__.py
+│   │   ├── config.py               # Environment/configuration settings
+│   │   ├── constants.py            # Application constants
+│   │   ├── database.py             # Database configuration
+│   │   ├── exceptions.py            # Custom exceptions
+│   │   ├── logging.py              # Logging configuration
+│   │   ├── security.py             # Authentication/security utilities
+│   │   └── text_utils.py            # Text processing utilities
+│   │
+│   ├── database/                   # Database and checkpoint management
+│   │   ├── __init__.py
+│   │   ├── checkpoint.py            # Graph/checkpoint persistence
+│   │   └── postgres.py              # PostgreSQL integration
+│   │
+│   ├── db/
+│   │   └── models.py               # Database models
+│   │
+│   ├── graph/                      # LangGraph workflow
+│   │   ├── __init__.py
+│   │   ├── builder.py              # Builds the agent graph
+│   │   ├── router.py               # Routes between graph nodes
+│   │   └── state.py                # Shared graph state
+│   │
+│   ├── llm/                        # LLM integration
+│   │   ├── __init__.py
+│   │   ├── groq_client.py          # Groq LLM client
+│   │   ├── parser.py               # LLM output parsing
+│   │   └── prompts.py              # System and agent prompts
+│   │
+│   ├── mcp/                        # MCP server integrations
+│   │   └── servers/
+│   │       └── weather_server.py   # Weather MCP server
+│   │
+│   ├── tools/                      # External tools and tool registry
+│   │   ├── tavily.py               # Tavily search integration
+│   │   ├── weather.py              # Weather tool
+│   │   ├── client.py               # Tool client
+│   │   └── registry.py             # Tool registration
+│   │
+│   ├── services/                   # Business/service layer
+│   │   ├── __init__.py
+│   │   ├── destination_service.py # Destination-related services
+│   │   └── travel_service.py      # Travel planning services
+│   │
+│   ├── __init__.py
+│   └── main.py                     # FastAPI application entry point
+│
+├── frontend/                       # Frontend application
+│   ├── css/
+│   │   ├── components.css
+│   │   └── main.css
+│   │
+│   ├── js/
+│   │   ├── api.js                  # API communication
+│   │   ├── auth.js                 # Authentication logic
+│   │   ├── config.js               # Frontend configuration
+│   │   └── travel.js               # Travel UI logic
+│   │
+│   └── pages/
+│       ├── dashboard.html          # Main dashboard
+│       └── login.html              # Login page
+│
+├── tests/                          # Automated tests
+│   ├── __init__.py
+│   ├── test_api.py
+│   ├── test_budget.py
+│   ├── test_flight.py
+│   ├── test_graph.py
+│   ├── test_guardrail.py
+│   ├── test_itinerary.py
+│   ├── test_supervisor.py
+│   └── test_weather.py
+│
+├── .gitignore
+├── Dockerfile                      # Docker container configuration
+├── LICENSE
+├── README.md
+├── api_test.py                     # API testing script
+├── render.yaml                     # Render deployment configuration
+├── requirements.txt                # Python dependencies
+├── template.py                     # Project/template utility
+└── tripmate.db                     # Local SQLite database
 ```
 
 ## Prerequisites
